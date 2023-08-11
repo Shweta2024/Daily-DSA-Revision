@@ -1,27 +1,24 @@
 class Solution {
 public:
+    
+    void dfs(int currentNode, vector<bool>&vist, vector<vector<int>>&adj)
+    {
+        vist[currentNode] = true;
+        
+        //process adj
+        for(auto adjacentNode : adj[currentNode])
+        {
+            if(!vist[adjacentNode])
+                dfs(adjacentNode,vist,adj);
+        }
+    }
+    
     bool canVisitAllRooms(vector<vector<int>>& rooms) 
     {
         vector<bool>vist(rooms.size(),false);
-        queue<int>q;
-        q.push(0);
-        vist[0] = true;
         
-        while(!q.empty())
-        {
-            int currentNode = q.front();
-            q.pop();
-            
-            //process adj
-            for(auto adjacentNode : rooms[currentNode])
-            {
-                if(!vist[adjacentNode])
-                {
-                    vist[adjacentNode] = true;
-                    q.push(adjacentNode);
-                }
-            }
-        }
+        dfs(0,vist,rooms);
+        
         for(auto current : vist)
         {
             if(!current)
