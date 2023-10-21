@@ -8,26 +8,24 @@ using namespace std;
 //User function template for C++
 
 class Solution {
-    public:
-    void shortest_distance(vector<vector<int>>&distance)
+  public:
+	void shortest_distance(vector<vector<int>>&matrix)
 	{
-	    int n = distance.size();
-	    
-	    
+	    int n = matrix.size();
 	    for(int intermediate = 0; intermediate < n; intermediate++)
 	    {
-	        for(int source = 0; source < n; source++)
+	        for(int src = 0; src < n; src++)
 	        {
-	            for(int destination = 0; destination < n; destination++)
+	            for(int des = 0; des < n; des++)
 	            {
-	                if(distance[source][intermediate] != -1 && distance[intermediate][destination] != -1)
+	                if(matrix[src][intermediate] != -1 && matrix[intermediate][des] != -1)
 	                {
-	                    int currentDistance = distance[source][intermediate]+distance[intermediate][destination];
-	                 
-	                    if(distance[source][destination] == -1)
-	                        distance[source][destination] = currentDistance;
+	                    int currentDist = matrix[src][intermediate] + matrix[intermediate][des];
+	                    
+	                    if(matrix[src][des] == -1)
+	                        matrix[src][des] = currentDist;
 	                    else
-	                        distance[source][destination] = min(distance[source][destination],currentDistance);
+	                        matrix[src][des] = min(matrix[src][des],currentDist);
 	                }
 	            }
 	        }
