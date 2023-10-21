@@ -6,33 +6,29 @@ using namespace std;
 class Solution {
   public:
   
-  void dfs(int currentNode, vector<bool>&visit, vector<int>&ans, vector<int> adj[])
+  void dfs(int currentNode, vector<bool>&vist, vector<int>&ans, vector<int> adj[])
   {
-      visit[currentNode] = true;
+      vist[currentNode] = true;
       ans.push_back(currentNode);
       
-      //process adjacentNodes
       for(auto adjacentNode : adj[currentNode])
       {
-          if(!visit[adjacentNode])
-            dfs(adjacentNode,visit,ans,adj);
+          if(!vist[adjacentNode])
+            dfs(adjacentNode,vist,ans,adj);
       }
   }
-  
   
     // Function to return a list containing the DFS traversal of the graph.
     vector<int> dfsOfGraph(int V, vector<int> adj[]) 
     {
-        vector<bool>visit(V,false);
         vector<int>ans;
+        vector<bool>vist(V,false);
         
-        // since we can have a disconnected graph
         for(int currentNode = 0; currentNode < V; currentNode++)
-        {   
-            if(!visit[currentNode])
-                dfs(currentNode,visit,ans,adj);
+        {
+            if(!vist[currentNode])
+                dfs(currentNode,vist,ans,adj);
         }
-        
         return ans;
     }
 };
