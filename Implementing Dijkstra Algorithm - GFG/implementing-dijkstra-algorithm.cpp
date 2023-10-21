@@ -7,48 +7,41 @@ class Solution
 {
 	public:
 	
-	
-	class Compare
-	{
+	class Compare{
 	    public:
+	    
 	    bool operator()(pair<int,int>a, pair<int,int>b)
 	    {
-	       if(a.second > b.second) // swap
-	            return true;
-	       return false;
+	        return a.first > b.first;
 	    }
 	};
-	
 	//Function to find the shortest distance of all the vertices
     //from the source vertex S.
     vector <int> dijkstra(int V, vector<vector<int>> adj[], int src)
     {
-        vector<int>distance(V,INT_MAX);
-        priority_queue<pair<int,int>, vector<pair<int,int>> , Compare>pq;//  node : weight
-        
-        distance[src] = 0;
-        pq.push({src,0});
+        vector<int>dist(V,INT_MAX);
+        priority_queue<pair<int,int>, vector<pair<int,int>>, Compare>pq;
+        dist[src] = 0;
+        pq.push({dist[src],src});
         
         while(!pq.empty())
         {
-            int currentNode = pq.top().first;
-            int currentNodeDistance = pq.top().second;
+            int currentNode = pq.top().second;
+            int currentDist = pq.top().first;
             pq.pop();
             
-            //process adjacent
-            for(auto adjacentPair : adj[currentNode])
+            for(auto adjPair : adj[currentNode])
             {
-                int adjacentNode = adjacentPair[0];
-                int adjacentNodeDistance = adjacentPair[1];
-                
-                if(distance[adjacentNode] > currentNodeDistance + adjacentNodeDistance)
+                int adjacentDist = adjPair[1];
+                int adjacentNode = adjPair[0];
+                if(dist[adjacentNode] > currentDist + adjacentDist)
                 {
-                    distance[adjacentNode] = currentNodeDistance + adjacentNodeDistance;
-                    pq.push({adjacentNode,distance[adjacentNode]});
+                    dist[adjacentNode] = currentDist + adjacentDist;
+                    pq.push({ currentDist + adjacentDist, adjacentNode});
                 }
             }
         }
-        return distance;
+        return dist;
     }
 };
 
