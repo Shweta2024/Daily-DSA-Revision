@@ -1,6 +1,6 @@
 class Solution {
 public:
-    vector<vector<int>> findMatrix(vector<int>& nums) 
+    vector<vector<int>> findMatrix(vector<int>& nums)
     {
         unordered_map<int,int>freq;
         
@@ -13,13 +13,11 @@ public:
         
         vector<vector<int>>ans(rowCount);
         
-        for(auto &current : freq)
+        for(auto current : freq)
         {
             for(int index = 0; index < current.second; index++)
                 ans[index].push_back(current.first);
-            
         }
-        
         return ans;
     }
 };
