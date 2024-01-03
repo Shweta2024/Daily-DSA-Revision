@@ -1,14 +1,14 @@
 class Solution {
 public:
-    int numberOfBeams(vector<string>& bank)
+    int numberOfBeams(vector<string>& bank) 
     {
-        int prev = 0;
         int ans = 0;
+        int prev = 0;
         
-        for(auto current : bank)
+        for(auto currentString : bank)
         {
             int count = 0;
-            for(auto currentChar : current)
+            for(auto currentChar : currentString)
             {
                 if(currentChar == '1')
                     count++;
