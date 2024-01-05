@@ -1,21 +1,34 @@
 class Solution {
 public:
-    int lengthOfLIS(vector<int>& nums) 
+    
+    int findLengthOfLIS(int currentIndex, int prevIndex, vector<int>& nums, vector<vector<int>>&memo)
     {
-        int maxLen = 1;
-        vector<int>dp(nums.size(),1);
+        if(currentIndex >= nums.size()) return 0;
         
-        for(int currentIndex = 1; currentIndex < nums.size(); currentIndex++)
-        {
-            for(int prevIndex = 0; prevIndex < currentIndex; prevIndex++)
-            {
-                if(nums[prevIndex] < nums[currentIndex])
-                {
-                    dp[currentIndex] = max(dp[prevIndex]+1,dp[currentIndex]);
-                    maxLen = max(maxLen,dp[currentIndex]);
-                }
-            }
-        }
-        return maxLen;
+        if(memo[currentIndex][prevIndex+1] != -1) return memo[currentIndex][prevIndex+1];
+        
+        
+        // take
+        int take = 0;
+        if(prevIndex == -1 || nums[prevIndex] < nums[currentIndex])
+            take = 1 + findLengthOfLIS(currentIndex+1,currentIndex,nums,memo);
+        
+        // not take
+        int notTake = 0 + findLengthOfLIS(currentIndex+1,prevIndex,nums,memo);
+            
+        memo[currentIndex][prevIndex+1] = max(take,notTake);
+        return memo[currentIndex][prevIndex+1];
+    }
+    
+    int lengthOfLIS(vector<int>& nums)
+    {
+        int n = nums.size();
+        vector<vector<int>>memo(n, vector<int>(n+1,-1));
+        return findLengthOfLIS(0,-1,nums,memo);
     }
 };
+/*
+-1 -1+1 = 0
+0   0+1 = 1
+1   1+1 = 2
+*/
