@@ -11,27 +11,22 @@
 class Solution {
 public:
     
-    ListNode* reverseLL(ListNode* head)
+    ListNode* reverseLL(ListNode*current, ListNode* prev, ListNode* nxt)
     {
-        if(!head || !head->next) return head;
+        if(!current)
+            return prev;
+        current->next = prev;
+        prev = current;
+        current = nxt;
 
-        ListNode* current = head;
-        ListNode* prev = NULL;
-        ListNode* nxt = head->next;
-
-        while(current)
-        {
-            current->next = prev;
-            prev = current;
-            current = nxt;
-
-            if(nxt) 
-                nxt = nxt->next;
-        } 
-        return prev;
+        if(nxt)
+            nxt =nxt->next;
+        return reverseLL(current,prev,nxt);
     }
-    
+
     ListNode* reverseList(ListNode* head) {
-        return reverseLL(head);
+        if(!head || !head->next)
+            return head;
+        return reverseLL(head,NULL,head->next);
     }
 };
