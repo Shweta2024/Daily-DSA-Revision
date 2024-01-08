@@ -16,19 +16,18 @@ public:
     {
         if(root == NULL) return 0;
         
-        if(low <= root->val && root->val <= high ) return root->val+ findSum(root->left,low,high)
-            +findSum(root->right,low,high);
+        if(root->val < low)
+            return findSum(root->right,low,high);
         
-        int leftAns = 0, rightAns = 0;
-        if(root->val <= low )
-             leftAns = findSum(root->right,low,high);
-        if(root->val >= high )
-             rightAns = findSum(root->left,low,high);
+        else if(root->val > high)
+            return findSum(root->left,low,high);
         
-        return leftAns+rightAns;
+        // low <= root->val && root->val <=high
+        else
+            return root->val + findSum(root->left,low,high) + findSum(root->right,low,high);
     }
     
-    int rangeSumBST(TreeNode* root, int low, int high) 
+    int rangeSumBST(TreeNode* root, int low, int high)
     {
         return findSum(root,low,high);
     }
