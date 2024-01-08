@@ -20,10 +20,10 @@ public:
             +findSum(root->right,low,high);
         
         int leftAns = 0, rightAns = 0;
-        if(root->val >= low )
-             leftAns = findSum(root->left,low,high);
-        if(root->val <= high )
-             rightAns = findSum(root->right,low,high);
+        if(root->val <= low )
+             leftAns = findSum(root->right,low,high);
+        if(root->val >= high )
+             rightAns = findSum(root->left,low,high);
         
         return leftAns+rightAns;
     }
