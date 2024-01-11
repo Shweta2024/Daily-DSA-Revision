@@ -12,43 +12,36 @@
 class Solution {
 public:
     
-    void populateAncestor(TreeNode* root, TreeNode* anc, vector<int>current,
-                          unordered_map<TreeNode*,vector<int>>&ancestor)
+    // function to find ancestors
+    void findAncestor(TreeNode* root, TreeNode* parent, vector<int>current, 
+                      unordered_map<TreeNode*, vector<int>>&ancestors)
     {
         if(!root) return;
         
-        // cout<<root->val<<": ";
-        current.push_back(anc->val);
-        // for(auto i : current)
-        //     cout<<i<<" ,";
-        // cout<<endl;
-        ancestor[root] = current;
-        populateAncestor(root->left,root,current,ancestor);
+        current.push_back(parent->val);
+        ancestors[root] = current;
         
-        // current.pop_back();
-        populateAncestor(root->right,root,current,ancestor);
-        
+        findAncestor(root->left,root,current,ancestors);
+        findAncestor(root->right,root,current,ancestors);
     }
     
     int maxAncestorDiff(TreeNode* root) 
     {
-        unordered_map<TreeNode*,vector<int>>ancestor;
+        unordered_map<TreeNode*, vector<int>>ancestors;
         vector<int>current;
-        populateAncestor(root->left,root,current,ancestor);
-        populateAncestor(root->right,root,current,ancestor);
+        
+        findAncestor(root->left,root,current,ancestors);
+        findAncestor(root->right,root,current,ancestors);     
         
         int maxDifference = INT_MIN;
-        for(auto current : ancestor)
+        for(auto current : ancestors)
         {
-            // cout<<current.first->val<<" -> ";
             TreeNode* currentNode = current.first;
-            for(auto currentAncestor : current.second)
+            for(auto ancestorNode : current.second)
             {
-                // cout<<currentAncestor<<" , ";
-                int currentDifference = abs(currentNode->val - currentAncestor);
-                maxDifference = max(maxDifference,currentDifference);
+                int currentDifference = abs(currentNode->val - ancestorNode);
+                maxDifference = max(maxDifference, currentDifference);
             }
-            // cout<<endl;
         }
         return maxDifference;
     }
