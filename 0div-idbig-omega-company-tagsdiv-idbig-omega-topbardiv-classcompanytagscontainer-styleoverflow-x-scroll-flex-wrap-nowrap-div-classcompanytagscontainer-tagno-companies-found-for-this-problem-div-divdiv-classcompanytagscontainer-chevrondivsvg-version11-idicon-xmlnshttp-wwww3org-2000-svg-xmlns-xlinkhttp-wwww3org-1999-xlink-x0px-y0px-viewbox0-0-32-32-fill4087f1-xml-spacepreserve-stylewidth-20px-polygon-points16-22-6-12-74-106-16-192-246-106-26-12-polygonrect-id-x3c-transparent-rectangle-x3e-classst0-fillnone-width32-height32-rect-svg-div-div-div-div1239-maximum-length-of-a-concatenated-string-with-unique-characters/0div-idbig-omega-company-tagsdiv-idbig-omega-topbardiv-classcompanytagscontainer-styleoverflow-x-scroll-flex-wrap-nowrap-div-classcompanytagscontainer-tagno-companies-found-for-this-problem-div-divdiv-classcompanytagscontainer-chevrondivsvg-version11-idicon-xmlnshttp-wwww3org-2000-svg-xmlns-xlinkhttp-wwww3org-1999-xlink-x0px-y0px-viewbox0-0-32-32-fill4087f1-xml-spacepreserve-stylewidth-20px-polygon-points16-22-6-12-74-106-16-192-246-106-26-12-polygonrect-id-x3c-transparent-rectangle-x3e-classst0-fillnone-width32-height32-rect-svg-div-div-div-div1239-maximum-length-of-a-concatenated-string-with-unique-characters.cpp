@@ -1,6 +1,7 @@
 class Solution {
 public:
     
+    // ["aa"]
     bool isValid(string &currentString, unordered_map<char,int>&memo)
     {
         unordered_map<char,int>temp;
@@ -10,29 +11,22 @@ public:
             if(memo[currentChar] == 1 || temp[currentChar] > 1)
                 return false;
         }
-        // cout<<"string: "<<currentString<<endl;
-        // for(auto c : temp)
-        //     cout<<c.first<<" : "<<c.second<<endl;
-        // cout<<"*****";
         return true;
     }
     
-    void findMaxLen(int currentIndex, string &current, int &ans, unordered_map<char,int>&memo, vector<string>&arr)
+    void findMaxLen(int currentIndex, string &current, int &maxLen, unordered_map<char,int>&memo, vector<string>&arr)
     {
         int len = current.size();
-        ans = max(ans,len);
+        maxLen = max(maxLen,len);
         
-        if(currentIndex >= arr.size())
-            return;
+        if(currentIndex == arr.size()) return ;
         
-        
+        //explore possibilities
         for(int index = currentIndex; index < arr.size(); index++)
         {
-            // cout<<currentIndex<<endl;
             string currentString = arr[index];
             if(isValid(currentString,memo))
             {
-                // cout<<currentString<<endl;
                 int i = 0;
                 while(i < currentString.size())
                 {
@@ -40,9 +34,10 @@ public:
                     memo[currentString[i]]++;
                     i++;
                 }
-                cout<<current<<endl;
-                findMaxLen(index+1,current,ans,memo,arr);
                 
+                findMaxLen(index+1,current,maxLen,memo,arr);
+                
+                // undo changes
                 i = currentString.size();
                 while(i--)
                 {
@@ -51,17 +46,17 @@ public:
                 }
             }
         }
-        return;
+        return ;
     }
     
     int maxLength(vector<string>& arr) 
     {
-        int ans = 0;
+        int maxLen = 0;
         string current = "";
         unordered_map<char,int>memo;
         
-        findMaxLen(0,current,ans,memo,arr);
+        findMaxLen(0,current,maxLen,memo,arr);
         
-        return ans;
+        return maxLen;
     }
 };
