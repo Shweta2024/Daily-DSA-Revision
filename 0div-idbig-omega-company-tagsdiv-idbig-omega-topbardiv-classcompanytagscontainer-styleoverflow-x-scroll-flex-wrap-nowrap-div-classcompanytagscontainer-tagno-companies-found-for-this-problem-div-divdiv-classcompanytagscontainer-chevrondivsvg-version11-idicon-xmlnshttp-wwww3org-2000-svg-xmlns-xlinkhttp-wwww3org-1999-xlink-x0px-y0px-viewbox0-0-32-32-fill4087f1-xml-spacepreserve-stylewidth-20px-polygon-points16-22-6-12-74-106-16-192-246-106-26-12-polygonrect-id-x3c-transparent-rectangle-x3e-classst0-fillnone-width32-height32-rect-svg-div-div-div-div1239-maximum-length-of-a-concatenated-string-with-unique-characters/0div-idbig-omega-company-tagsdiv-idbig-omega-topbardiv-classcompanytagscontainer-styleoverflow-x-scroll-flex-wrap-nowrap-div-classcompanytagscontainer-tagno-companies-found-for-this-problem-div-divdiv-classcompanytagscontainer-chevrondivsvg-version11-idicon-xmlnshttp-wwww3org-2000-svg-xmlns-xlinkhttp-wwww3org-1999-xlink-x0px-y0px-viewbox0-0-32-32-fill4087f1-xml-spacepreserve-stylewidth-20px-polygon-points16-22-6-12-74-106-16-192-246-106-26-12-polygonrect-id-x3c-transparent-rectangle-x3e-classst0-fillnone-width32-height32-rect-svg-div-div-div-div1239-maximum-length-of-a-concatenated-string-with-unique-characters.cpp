@@ -19,13 +19,12 @@ public:
     
     void findMaxLen(int currentIndex, string &current, int &ans, unordered_map<char,int>&memo, vector<string>&arr)
     {
+        int len = current.size();
+        ans = max(ans,len);
+        
         if(currentIndex >= arr.size())
-        {
-            // cout<<current<<endl;
-            int len = current.size();
-            ans = max(ans,len);
             return;
-        }
+        
         
         for(int index = currentIndex; index < arr.size(); index++)
         {
@@ -52,8 +51,6 @@ public:
                 }
             }
         }
-        int len = current.size();
-        ans = max(ans,len);
         return;
     }
     
