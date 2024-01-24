@@ -12,13 +12,13 @@
 class Solution {
 public:
     
-    bool isPseudoPalindromic(vector<int>& count)
-    {   
+    bool isPseudoPalindromic(vector<int>&count)
+    {
         int oddFreq = 0;
         for(auto current : count)
         {
-            if(current == 0) continue;
-            if(current%2 == 1) oddFreq++;
+            if(current%2 == 1)
+                oddFreq++;
             
             if(oddFreq > 1)
                 return false;
@@ -26,16 +26,16 @@ public:
         return true;
     }
     
- 
-    void totalPseudoPalindromicPaths(TreeNode* root, int &ans, vector<int>&count)
+    void findTotalPseudoPalindromicPaths(TreeNode* root, int &ans, vector<int>&count)
     {
         if(root == NULL) return;
         
         count[root->val]++;
-        totalPseudoPalindromicPaths(root->left,ans,count);
-        totalPseudoPalindromicPaths(root->right,ans,count);
+        findTotalPseudoPalindromicPaths(root->left,ans,count);
+        findTotalPseudoPalindromicPaths(root->right,ans,count);
         
-        if(!root->left && !root->right)
+        // got a path
+        if(root->left == NULL && root->right == NULL)
         {
             if(isPseudoPalindromic(count))
                 ans++;
@@ -43,6 +43,7 @@ public:
         
         // undo changes
         count[root->val]--;
+        return;
     }
     
     int pseudoPalindromicPaths (TreeNode* root) 
@@ -50,7 +51,7 @@ public:
         int ans = 0;
         vector<int>count(10,0);
         
-        totalPseudoPalindromicPaths(root,ans,count);        
+        findTotalPseudoPalindromicPaths(root,ans,count);
         
         return ans;
     }
