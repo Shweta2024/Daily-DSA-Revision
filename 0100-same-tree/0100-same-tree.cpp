@@ -12,18 +12,22 @@
 class Solution {
 public:
     
-    bool isEqual(TreeNode* root1, TreeNode* root2)
+    bool isSame(TreeNode* r1, TreeNode* r2)
     {
-        if(!root1 && !root2) return true;
-        if(!root1 && root2) return false;
-        if(root1 && !root2) return false;
-        if(root1->val != root2->val) return false;
+        if(r1 == NULL && r2 == NULL) return true;
+        if(r1 == NULL || r2 == NULL) return false;
         
-        return isEqual(root1->left,root2->left) && isEqual(root1->right,root2->right);
+        if(r1->val != r2->val) 
+            return false;
+        
+        bool leftAns = isSame(r1->left,r2->left);
+        bool rightAns = isSame(r1->right,r2->right);
+        
+        return leftAns && rightAns;
     }
     
-    bool isSameTree(TreeNode* p, TreeNode* q) 
+    bool isSameTree(TreeNode* p, TreeNode* q)
     {
-       return isEqual(p,q); 
+        return isSame(p,q);
     }
 };
