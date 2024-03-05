@@ -1,17 +1,18 @@
 class Solution {
 public:
-    int minimumLength(string s)
+    int minimumLength(string s) 
     {
-        int start = 0;
-        int end = s.size()-1;
+        int start = 0; // prefix
+        int end = s.size() - 1; // suffix
         
         while(start < end && s[start] == s[end])
         {
-            char currentChar = s[start];
+            char current = s[start];
             
-            while(start <= end && s[start] == currentChar)
+            while(start <= end && s[start] == current)
                 start++;
-            while(end > start && s[end] == currentChar)
+            
+            while(end > start && s[end] == current)
                 end--;
         }
         return end-start+1;
