@@ -1,26 +1,23 @@
 class Solution {
 public:
-    int maxFrequencyElements(vector<int>& nums)
+    int maxFrequencyElements(vector<int>& nums) 
     {
         int ans = 0;
-        int maxFrequency = 0;
-        unordered_map<int,int>memo;
-        
+        int maxFreq = 0;
+        unordered_map<int,int>memo;// element:freq
         for(int index = 0; index < nums.size(); index++)
         {
             memo[nums[index]]++;
-            int currentFrequency = memo[nums[index]];
+            int currentFreq = memo[nums[index]];
             
-            // if currentFrequency is greater than maxFrequency then update maxFrequency and ans
-            if(currentFrequency > maxFrequency)
+            if(currentFreq > maxFreq)
             {
-                maxFrequency = currentFrequency;
-                ans = currentFrequency;
+                maxFreq = currentFreq;
+                ans = maxFreq;
             }
             
-            // otherwise, if currentFrequency is equal to maxFrequency, then simply add it to ans
-            else if( currentFrequency == maxFrequency)
-                ans += currentFrequency;
+            else if(currentFreq == maxFreq)
+                ans += currentFreq;
         }
         return ans;
     }
