@@ -3,19 +3,21 @@ public:
     int maxFrequencyElements(vector<int>& nums) 
     {
         int ans = 0;
-        int maxVal = -1;
-        unordered_map<int,int>memo;
+        int maxFreq = 0;
+        unordered_map<int,int>memo; // element : freq.
+        
         for(auto current : nums)
         {
             memo[current]++;
-            maxVal = max(maxVal,memo[current]);
+            maxFreq = max(maxFreq,memo[current]);
         }
         
         for(auto current : memo)
         {
-            if(current.second == maxVal)
+            if(current.second == maxFreq)
                 ans += current.second;
         }
+        
         return ans;
     }
 };
