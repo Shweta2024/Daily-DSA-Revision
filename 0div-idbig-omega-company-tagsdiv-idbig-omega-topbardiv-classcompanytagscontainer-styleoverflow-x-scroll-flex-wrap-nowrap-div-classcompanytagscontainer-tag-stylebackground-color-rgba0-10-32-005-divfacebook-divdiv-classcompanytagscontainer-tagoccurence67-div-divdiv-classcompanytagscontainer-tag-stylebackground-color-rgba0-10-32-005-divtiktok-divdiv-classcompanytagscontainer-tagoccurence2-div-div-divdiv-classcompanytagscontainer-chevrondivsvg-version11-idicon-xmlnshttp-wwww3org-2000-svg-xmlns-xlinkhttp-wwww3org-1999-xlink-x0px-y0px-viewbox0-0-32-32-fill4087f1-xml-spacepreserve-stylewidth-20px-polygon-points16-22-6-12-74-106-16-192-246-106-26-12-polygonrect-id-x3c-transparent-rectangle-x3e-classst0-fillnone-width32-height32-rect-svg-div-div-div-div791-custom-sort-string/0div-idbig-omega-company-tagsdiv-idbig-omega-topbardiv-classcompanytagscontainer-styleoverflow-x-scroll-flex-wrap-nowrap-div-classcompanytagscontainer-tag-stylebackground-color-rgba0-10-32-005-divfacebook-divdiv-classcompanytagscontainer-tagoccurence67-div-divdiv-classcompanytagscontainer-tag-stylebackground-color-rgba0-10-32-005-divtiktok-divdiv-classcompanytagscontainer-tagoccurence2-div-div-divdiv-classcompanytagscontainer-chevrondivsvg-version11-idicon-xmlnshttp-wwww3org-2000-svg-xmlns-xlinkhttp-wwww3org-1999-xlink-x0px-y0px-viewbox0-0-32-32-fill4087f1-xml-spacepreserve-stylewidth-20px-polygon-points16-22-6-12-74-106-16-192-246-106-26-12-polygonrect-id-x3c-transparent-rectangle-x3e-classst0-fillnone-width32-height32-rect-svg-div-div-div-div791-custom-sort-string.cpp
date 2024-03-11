@@ -1,9 +1,10 @@
 class Solution {
 public:
-    string customSortString(string order, string s) 
+    string customSortString(string order, string s)
     {
+        unordered_map<char,int>memo;// element : freq
         string ans = "";
-        unordered_map<char,int>memo;
+        
         for(auto current : s)
             memo[current]++;
         
@@ -14,6 +15,7 @@ public:
                 ans += current;
             memo[current] = 0;
         }
+        
         for(auto current : memo)
         {
             int freq = current.second;
