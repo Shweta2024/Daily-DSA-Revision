@@ -13,27 +13,25 @@ public:
     ListNode* mergeInBetween(ListNode* list1, int a, int b, ListNode* list2) 
     {
         ListNode* current = list1;
-        ListNode* from = NULL;
-        ListNode* to = NULL;
-        a -= 1;
+        ListNode* from = NULL; // to store the a-1 th node
+        ListNode* to = NULL; // store part after b
+        
         int i = 0;
-        int j = 0;
-        while(i < a || j < b)
+        while(i <= b)
         {
-            if(i == a)
+            if(i == a-1)
                 from = current;
+            else if(i == b)
+                to = current->next;
             current = current->next;
             i++;
-            j++;
         }
-        to = current;
-        from->next = list2;
-        
         current = list2;
         while(current->next != NULL)
             current = current->next;
         
-        current->next = to->next;
+        from->next = list2;
+        current->next = to;
         return list1;
     }
 };
